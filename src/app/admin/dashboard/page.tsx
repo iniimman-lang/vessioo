@@ -13,6 +13,8 @@ import {
   X,
   Trash2,
   Plus,
+  Globe,
+  MessageCircle,
 } from "lucide-react";
 
 interface Testimonial {
@@ -49,6 +51,25 @@ interface TeamMember {
   image: string | null;
 }
 
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string | null;
+  websiteUrl: string | null;
+  category: string | null;
+}
+
+interface ChatMessage {
+  id: string;
+  name: string;
+  email: string | null;
+  message: string;
+  reply: string | null;
+  isRead: boolean;
+  createdAt: string;
+}
+
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -57,10 +78,13 @@ export default function DashboardPage() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState<"testimonial" | "service" | "team">("testimonial");
+  const [modalType, setModalType] = useState<"testimonial" | "service" | "team" | "project">("testimonial");
   const [formData, setFormData] = useState<any>({});
+  const [replyForm, setReplyForm] = useState<{ id: string; reply: string } | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -74,6 +98,12 @@ export default function DashboardPage() {
       fetchMessages();
       fetchServices();
       fetchTeamMembers();
+      fetchProjects();
+      fetchChatMessages();
+      
+      // Poll for new chat messages every 5 seconds
+      const interval = setInterval(fetchChatMessages, 5000);
+      return () => clearInterval(interval);
     }
   }, [session]);
 
@@ -101,6 +131,65 @@ export default function DashboardPage() {
     setTeamMembers(data);
   };
 
+  const fetchProjects = async () => {
+    const res = await fetch("/api/projects");
+    const data = await res.json();
+    setProjects(data);
+  };
+
+  const fetchChatMessages = async () => {
+    try {
+      const res = await fetch("/api/chat");
+      if (!res.ok) throw new Error("Failed to fetch");
+      const data = await res.json();
+      setChatMessages(data);
+    } catch (error) {
+      console.error("Error fetching chat messages:", error);
+    }
+  };
+
+  // Count answered vs unanswered
+  const answeredCount = chatMessages.filter((m: any) => m.reply).length;
+  const pendingCount = chatMessages.filter((m: any) => !m.reply).length;
+
+  // Group messages by IP address
+  const groupedMessages = chatMessages.reduce((acc: any, msg: any) => {
+    const key = msg.ipAddress || msg.name.toLowerCase().trim();
+    if (!acc[key]) {
+      acc[key] = {
+        name: msg.name,
+        email: msg.email,
+        ipAddress: msg.ipAddress,
+        messages: [],
+        lastMessageAt: msg.createdAt,
+      };
+    }
+    acc[key].messages.push(msg);
+    if (new Date(msg.createdAt) > new Date(acc[key].lastMessageAt)) {
+      acc[key].lastMessageAt = msg.createdAt;
+    }
+    return acc;
+  }, {});
+
+  // Convert to array and sort by latest message
+  const conversations = Object.values(groupedMessages).sort(
+    (a: any, b: any) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+  );
+
+  const handleReplySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!replyForm) return;
+
+    await fetch("/api/chat", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(replyForm),
+    });
+
+    setReplyForm(null);
+    fetchChatMessages();
+  };
+
   const handleDelete = async (type: string, id: string) => {
     if (!confirm("Are you sure you want to delete this?")) return;
 
@@ -109,9 +198,10 @@ export default function DashboardPage() {
     if (type === "contact") fetchMessages();
     if (type === "services") fetchServices();
     if (type === "team") fetchTeamMembers();
+    if (type === "projects") fetchProjects();
   };
 
-  const handleAddNew = (type: "testimonial" | "service" | "team") => {
+  const handleAddNew = (type: "testimonial" | "service" | "team" | "project") => {
     setModalType(type);
     setShowModal(true);
     setFormData({});
@@ -119,7 +209,7 @@ export default function DashboardPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const endpoint = modalType === "testimonial" ? "testimonials" : modalType === "service" ? "services" : "team";
+    const endpoint = modalType === "testimonial" ? "testimonials" : modalType === "service" ? "services" : modalType === "project" ? "projects" : "team";
     
     await fetch(`/api/${endpoint}`, {
       method: "POST",
@@ -131,6 +221,7 @@ export default function DashboardPage() {
     if (modalType === "testimonial") fetchTestimonials();
     if (modalType === "service") fetchServices();
     if (modalType === "team") fetchTeamMembers();
+    if (modalType === "project") fetchProjects();
   };
 
   if (status === "loading") {
@@ -146,9 +237,11 @@ export default function DashboardPage() {
   const navItems = [
     { id: "overview", label: "Overview", icon: Briefcase },
     { id: "testimonials", label: "Testimonials", icon: Star },
-    { id: "messages", label: "Messages", icon: MessageSquare },
+    { id: "messages", label: "Contact Messages", icon: MessageSquare },
     { id: "services", label: "Services", icon: Users },
     { id: "team", label: "Team", icon: Users },
+    { id: "projects", label: "Projects", icon: Globe },
+    { id: "chat", label: "Live Chat", icon: MessageCircle },
   ];
 
   return (
@@ -181,7 +274,7 @@ export default function DashboardPage() {
                   }}
                   className={`w-full flex items-center px-4 py-3 rounded-lg transition ${
                     activeTab === item.id
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[var(--color-highlight)] text-white"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
@@ -190,8 +283,7 @@ export default function DashboardPage() {
                 </button>
               ))}
             </nav>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <div className="border-t border-gray-200 my-4"></div>
             <button
               onClick={() => signOut({ callbackUrl: "/admin/login" })}
               className="w-full flex items-center px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition"
@@ -217,7 +309,7 @@ export default function DashboardPage() {
           {/* Overview */}
           {activeTab === "overview" && (
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
                 <div className="bg-white p-6 rounded-lg shadow">
                   <Star className="h-8 w-8 text-yellow-500 mb-4" />
                   <p className="text-3xl font-bold">{testimonials.length}</p>
@@ -226,7 +318,7 @@ export default function DashboardPage() {
                 <div className="bg-white p-6 rounded-lg shadow">
                   <MessageSquare className="h-8 w-8 text-blue-500 mb-4" />
                   <p className="text-3xl font-bold">{messages.length}</p>
-                  <p className="text-gray-600">Messages</p>
+                  <p className="text-gray-600">Contact Msgs</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
                   <Users className="h-8 w-8 text-green-500 mb-4" />
@@ -236,7 +328,17 @@ export default function DashboardPage() {
                 <div className="bg-white p-6 rounded-lg shadow">
                   <Briefcase className="h-8 w-8 text-purple-500 mb-4" />
                   <p className="text-3xl font-bold">{teamMembers.length}</p>
-                  <p className="text-gray-600">Team Members</p>
+                  <p className="text-gray-600">Team</p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow">
+                  <Globe className="h-8 w-8 text-red-500 mb-4" />
+                  <p className="text-3xl font-bold">{projects.length}</p>
+                  <p className="text-gray-600">Projects</p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow">
+                  <MessageCircle className="h-8 w-8 text-orange-500 mb-4" />
+                  <p className="text-3xl font-bold">{pendingCount}</p>
+                  <p className="text-gray-600">Pending Chat</p>
                 </div>
               </div>
 
@@ -389,6 +491,157 @@ export default function DashboardPage() {
               </div>
             </div>
           )}
+
+          {/* Projects */}
+          {activeTab === "projects" && (
+            <div>
+              <button
+                onClick={() => handleAddNew("project")}
+                className="mb-6 bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-700 transition"
+              >
+                <Plus className="h-5 w-5 mr-2" /> Add Project
+              </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects.map((project) => (
+                  <div key={project.id} className="bg-white rounded-lg shadow overflow-hidden">
+                    <img src={project.imageUrl || "https://via.placeholder.com/400x200"} alt={project.title} className="w-full h-40 object-cover" />
+                    <div className="p-4">
+                      <h3 className="text-lg font-bold mb-1">{project.title}</h3>
+                      <p className="text-xs text-[var(--color-highlight)] font-semibold mb-2">{project.category}</p>
+                      <p className="text-gray-600 text-sm mb-3">{project.description}</p>
+                      {project.websiteUrl && (
+                        <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 text-sm hover:underline block mb-3">
+                          {project.websiteUrl}
+                        </a>
+                      )}
+                      <button
+                        onClick={() => handleDelete("projects", project.id)}
+                        className="text-red-600 hover:text-red-800 flex items-center text-sm"
+                      >
+                        <Trash2 className="h-4 w-4 mr-1" /> Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Live Chat */}
+          {activeTab === "chat" && (
+            <div>
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold">Live Chat Messages</h2>
+                  <div className="flex gap-4 mt-2">
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                      ✓ {answeredCount} Answered
+                    </span>
+                    <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
+                      ⏳ {pendingCount} Pending
+                    </span>
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold">
+                      📊 {chatMessages.length} Total
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={fetchChatMessages}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                >
+                  Refresh
+                </button>
+              </div>
+              
+              {chatMessages.length === 0 ? (
+                <div className="text-center py-16">
+                  <MessageCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 text-lg">No chat messages yet.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {chatMessages.map((chat: any) => (
+                    <div key={chat.id} className="bg-white rounded-lg shadow p-6">
+                      {/* User Message */}
+                      <div className="flex justify-end mb-3">
+                        <div className="bg-gradient-to-br from-[var(--color-highlight)] to-[var(--color-accent)] text-white rounded-2xl rounded-br-sm px-4 py-3 max-w-[70%]">
+                          <p className="text-sm">{chat.message}</p>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-white/80">
+                            <span>{chat.name}</span>
+                            {chat.email && <span>• {chat.email}</span>}
+                            <span>• {new Date(chat.createdAt).toLocaleString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Admin Reply */}
+                      {chat.reply ? (
+                        <div className="flex justify-start">
+                          <div className="bg-green-50 border border-green-200 rounded-2xl rounded-bl-sm px-4 py-3 max-w-[70%]">
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                                </svg>
+                              </div>
+                              <span className="text-sm font-semibold text-green-800">Support Team</span>
+                            </div>
+                            <p className="text-gray-700">{chat.reply}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-4 mt-4 pt-4 border-t">
+                          <button
+                            onClick={() => setReplyForm({ id: chat.id, reply: "" })}
+                            className="px-4 py-2 bg-[var(--color-highlight)] text-white rounded-lg hover:bg-[var(--color-accent)] transition"
+                          >
+                            Reply
+                          </button>
+                          <button
+                            onClick={() => {
+                              handleDelete("chat", chat.id);
+                            }}
+                            className="text-red-600 hover:text-red-800 flex items-center text-sm"
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" /> Delete
+                          </button>
+                        </div>
+                      )}
+                      
+                      {/* Reply Form */}
+                      {replyForm && replyForm?.id === chat.id && (
+                        <form onSubmit={handleReplySubmit} className="mt-4 space-y-3">
+                          <textarea
+                            value={replyForm?.reply || ''}
+                            onChange={(e) => setReplyForm({ ...replyForm, reply: e.target.value })}
+                            placeholder="Type your reply..."
+                            rows={3}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent outline-none"
+                            required
+                          />
+                          <div className="flex gap-2">
+                            <button
+                              type="submit"
+                              className="px-4 py-2 bg-[var(--color-highlight)] text-white rounded-lg hover:bg-[var(--color-accent)] transition"
+                            >
+                              Send Reply
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setReplyForm(null)}
+                              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </main>
       </div>
 
@@ -397,7 +650,7 @@ export default function DashboardPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
             <h2 className="text-xl font-bold mb-4">
-              Add {modalType === "testimonial" ? "Testimonial" : modalType === "service" ? "Service" : "Team Member"}
+              Add {modalType === "testimonial" ? "Testimonial" : modalType === "service" ? "Service" : modalType === "project" ? "Project" : "Team Member"}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {modalType === "testimonial" && (
@@ -487,6 +740,47 @@ export default function DashboardPage() {
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg"
                     rows={4}
+                  />
+                </>
+              )}
+              {modalType === "project" && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Project Title"
+                    value={formData.title || ""}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                    required
+                  />
+                  <textarea
+                    placeholder="Description"
+                    value={formData.description || ""}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                    rows={3}
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Category (e.g., E-Commerce)"
+                    value={formData.category || ""}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                  <input
+                    type="url"
+                    placeholder="Image URL"
+                    value={formData.imageUrl || ""}
+                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                  <input
+                    type="url"
+                    placeholder="Website URL"
+                    value={formData.websiteUrl || ""}
+                    onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
                   />
                 </>
               )}

@@ -54,7 +54,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#270A09] to-[#720E07] text-white py-20">
+      <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
@@ -82,12 +82,12 @@ export default function ServicesPage() {
                   }`}
                 >
                   <div className="flex-1">
-                    <div className="bg-[#E94D1A]/10 rounded-2xl p-8 flex items-center justify-center h-64">
-                      <IconComponent className="h-32 w-32 text-[#E94D1A]" />
+                    <div className="bg-[var(--color-highlight)]/10 rounded-2xl p-8 flex items-center justify-center h-64">
+                      <IconComponent className="h-32 w-32" style={{ color: 'var(--color-highlight)' }} />
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h2 className="text-3xl font-bold mb-4 text-[#270A09]">{service.title}</h2>
+                    <h2 className="text-3xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>{service.title}</h2>
                     <p className="text-lg text-gray-700 mb-6">{details.description}</p>
                     <p className="text-gray-600 mb-4 font-semibold">Includes:</p>
                     <ul className="space-y-2 mb-8">
@@ -100,7 +100,7 @@ export default function ServicesPage() {
                     </ul>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center text-[#E94D1A] font-semibold hover:text-[#C3130B] transition"
+                      className="inline-flex items-center" style={{ color: 'var(--color-highlight)' }}
                     >
                       Get Started <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
@@ -115,13 +115,13 @@ export default function ServicesPage() {
       {/* Pricing CTA */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#270A09]">Ready to Get Started?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>Ready to Get Started?</h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Contact us today for a free consultation and quote for your project.
           </p>
           <Link
             href="/contact"
-            className="inline-block bg-[#E94D1A] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#C3130B] transition"
+            className="inline-block bg-[var(--color-highlight)] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[var(--color-accent)] transition"
           >
             Request Free Consultation
           </Link>

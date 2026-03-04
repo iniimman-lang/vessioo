@@ -97,6 +97,54 @@ async function main() {
     ],
   });
 
+  // Create sample projects
+  await prisma.project.createMany({
+    data: [
+      {
+        title: "E-Commerce Platform",
+        description: "Full-featured online store with payment integration",
+        imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "E-Commerce",
+      },
+      {
+        title: "Real Estate Website",
+        description: "Property listing and booking platform",
+        imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "Real Estate",
+      },
+      {
+        title: "Restaurant Booking App",
+        description: "Table reservation and menu management system",
+        imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "Hospitality",
+      },
+      {
+        title: "Healthcare Portal",
+        description: "Patient management and appointment booking",
+        imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "Healthcare",
+      },
+      {
+        title: "Education Platform",
+        description: "Online learning and course management",
+        imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "Education",
+      },
+      {
+        title: "Fitness Tracking App",
+        description: "Workout tracking and nutrition planning",
+        imageUrl: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+        websiteUrl: "https://example.com",
+        category: "Health & Fitness",
+      },
+    ],
+  });
+
   console.log("Seeding completed successfully!");
 }
 

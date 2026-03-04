@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Instagram, MessageCircle } from "lucide-react";
+import ChatWidget from "@/components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +18,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Veesioo - Build Your Website or Mobile App in Just 2 Days",
   description: "Full-Stack Websites from ₦50,000 (~$36). Android & iPhone Apps from ₦100,000 (~$72). Pay After Delivery.",
+  manifest: "/manifest.json",
+  themeColor: "#E94D1A",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Veesioo",
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +44,7 @@ export default function RootLayout({
               <div className="hidden md:flex space-x-8">
                 <Link href="/" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Home</Link>
                 <Link href="/about" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>About Us</Link>
+                <Link href="/projects" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Projects</Link>
                 <Link href="/team" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Team</Link>
                 <Link href="/services" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Services</Link>
                 <Link href="/reviews" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
@@ -94,6 +103,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <ChatWidget />
       </body>
     </html>
   );

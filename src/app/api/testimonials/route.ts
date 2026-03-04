@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
@@ -12,14 +14,22 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const body = await req.json();
+  
+  if (!body.name || !body.content || !body.rating) {
+    return NextResponse.json(
+      { error: "Name, content, and rating are required" },
+      { status: 400 }
+    );
   }
 
-  const body = await req.json();
   const testimonial = await prisma.testimonial.create({
-    data: body,
+    data: {
+      name: body.name,
+      content: body.content,
+      rating: parseInt(body.rating),
+      location: body.location || null,
+    },
   });
 
   return NextResponse.json(testimonial);

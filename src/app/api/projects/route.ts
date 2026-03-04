@@ -6,10 +6,10 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const members = await prisma.teamMember.findMany({
+  const projects = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
   });
-  return NextResponse.json(members);
+  return NextResponse.json(projects);
 }
 
 export async function POST(req: Request) {
@@ -19,11 +19,11 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const member = await prisma.teamMember.create({
+  const project = await prisma.project.create({
     data: body,
   });
 
-  return NextResponse.json(member);
+  return NextResponse.json(project);
 }
 
 export async function DELETE(req: Request) {
@@ -36,7 +36,7 @@ export async function DELETE(req: Request) {
   const id = searchParams.get("id");
 
   if (id) {
-    await prisma.teamMember.delete({ where: { id } });
+    await prisma.project.delete({ where: { id } });
   }
 
   return NextResponse.json({ success: true });

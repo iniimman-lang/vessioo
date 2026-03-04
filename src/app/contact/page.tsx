@@ -51,7 +51,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#270A09] to-[#720E07] text-white py-20">
+      <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
@@ -94,7 +94,7 @@ export default function ContactPage() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                       placeholder="John Doe"
                     />
                   </div>
@@ -110,7 +110,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -125,7 +125,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                       placeholder="+234 XXX XXX XXXX"
                     />
                   </div>
@@ -139,7 +139,7 @@ export default function ContactPage() {
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                     >
                       <option value="">Select a project type</option>
                       <option value="Website">Website</option>
@@ -160,7 +160,7 @@ export default function ContactPage() {
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                     >
                       <option value="">Select budget range</option>
                       <option value="₦50,000 - ₦100,000">₦50,000 - ₦100,000</option>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E94D1A] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent"
                       placeholder="Tell us about your project..."
                     />
                   </div>
@@ -189,7 +189,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#E94D1A] text-white py-4 rounded-lg font-semibold hover:bg-[#C3130B] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    className="w-full bg-[var(--color-highlight)] text-white py-4 rounded-lg font-semibold hover:bg-[var(--color-accent)] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                   >
                     {loading ? "Sending..." : (
                       <>
@@ -203,43 +203,43 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div>
-              <h2 className="text-3xl font-bold mb-6 text-[#270A09]">Get in Touch</h2>
+              <h2 className="text-3xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>Get in Touch</h2>
               <p className="text-gray-600 mb-8 text-lg">
                 Have questions? We&apos;re here to help. Reach out to us and we&apos;ll respond as soon as possible.
               </p>
 
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <MapPin className="h-6 w-6 text-[#E94D1A] mr-4 mt-1" />
+                  <MapPin className="h-6 w-6 mr-4 mt-1" style={{ color: 'var(--color-highlight)' }} />
                   <div>
-                    <h3 className="font-semibold text-lg text-[#270A09]">Office Location</h3>
+                    <h3 className="font-semibold text-lg" style={{ color: 'var(--color-primary)' }}>Office Location</h3>
                     <p className="text-gray-600">Nigeria</p>
                   </div>
                 </div>
 
                 <div className="flex items-start">
-                  <Mail className="h-6 w-6 text-[#E94D1A] mr-4 mt-1" />
+                  <Mail className="h-6 w-6 mr-4 mt-1" style={{ color: 'var(--color-highlight)' }} />
                   <div>
-                    <h3 className="font-semibold text-lg text-[#270A09]">Email</h3>
-                    <a href="mailto:info@veesioo.com" className="text-[#E94D1A] hover:underline">
+                    <h3 className="font-semibold text-lg" style={{ color: 'var(--color-primary)' }}>Email</h3>
+                    <a href="mailto:info@veesioo.com" style={{ color: 'var(--color-highlight)' }} className="hover:underline">
                       info@veesioo.com
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start">
-                  <Phone className="h-6 w-6 text-[#E94D1A] mr-4 mt-1" />
+                  <Phone className="h-6 w-6 mr-4 mt-1" style={{ color: 'var(--color-highlight)' }} />
                   <div>
-                    <h3 className="font-semibold text-lg text-[#270A09]">Phone/WhatsApp</h3>
-                    <a href="tel:+2349040157866" className="text-[#E94D1A] hover:underline">
+                    <h3 className="font-semibold text-lg" style={{ color: 'var(--color-primary)' }}>Phone/WhatsApp</h3>
+                    <a href="tel:+2349040157866" style={{ color: 'var(--color-highlight)' }} className="hover:underline">
                       +234 904 015 7866
                     </a>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-12 bg-[#E94D1A]/10 rounded-lg p-6">
-                <h3 className="font-bold text-lg mb-4 text-[#270A09]">Why Choose Veesioo?</h3>
+              <div className="mt-12 bg-[var(--color-highlight)]/10 rounded-lg p-6">
+                <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--color-primary)' }}>Why Choose Veesioo?</h3>
                 <ul className="space-y-2">
                   <li className="flex items-center text-gray-700">
                     <CheckCircle className="h-5 w-5 text-green-500 mr-3" />

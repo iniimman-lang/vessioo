@@ -30,7 +30,7 @@ export default function ReviewsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#270A09] to-[#720E07] text-white py-20">
+      <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Client Reviews</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
@@ -45,7 +45,7 @@ export default function ReviewsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <stat.icon className="h-12 w-12 text-[#E94D1A] mx-auto mb-4" />
+                <stat.icon className="h-12 w-12 mx-auto mb-4" style={{ color: 'var(--color-highlight)' }} />
                 <p className="text-4xl font-bold text-gray-900 mb-2">{stat.value}</p>
                 <p className="text-gray-600">{stat.label}</p>
               </div>
@@ -57,7 +57,7 @@ export default function ReviewsPage() {
       {/* Testimonials Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#270A09]">What Clients Say</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--color-primary)' }}>What Clients Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition">
@@ -126,7 +126,7 @@ export default function ReviewsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-[#270A09] text-white">
+      <section className="py-16" style={{ backgroundColor: 'var(--color-primary)' }} text-white>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our Happy Clients</h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
@@ -134,7 +134,7 @@ export default function ReviewsPage() {
           </p>
           <a
             href="/contact"
-            className="inline-block bg-[#E94D1A] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#C3130B] transition"
+            className="inline-block bg-[var(--color-highlight)] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[var(--color-accent)] transition"
           >
             Start Your Project
           </a>
