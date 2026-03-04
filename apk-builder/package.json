@@ -1,0 +1,24 @@
+{
+  "name": "Veesioo Admin APK",
+  "version": "1.0.0",
+  "description": "Veesioo Admin Mobile App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --android"
+  },
+  "build": {
+    "appId": "com.veesioo.admin",
+    "productName": "Veesioo Admin",
+    "directories": {
+      "output": "dist"
+    },
+    "android": {
+      "target": "apk"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  }
+}
