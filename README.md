@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Veesioo - Full Stack Website
+
+A modern, full-stack website for Veesioo digital agency built with Next.js 16, TypeScript, Tailwind CSS, Prisma, and NextAuth.
+
+## Features
+
+- 🏠 **Homepage** - Hero section, services preview, pricing, testimonials
+- 📄 **About Us** - Company information and vision
+- 👥 **Team** - Team members showcase
+- 🛠 **Services** - Detailed services pages
+- ⭐ **Reviews** - Client testimonials and ratings
+- 📞 **Contact** - Contact form with database storage
+- 🔐 **Admin Dashboard** - Full CMS functionality
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **Database:** SQLite with Prisma ORM
+- **Authentication:** NextAuth.js
+- **Icons:** Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ installed
+- npm or yarn
+
+### Installation
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up the database:
+```bash
+npx prisma migrate dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Seed the database with initial data:
+```bash
+npm run seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) to see the website.
 
-To learn more about Next.js, take a look at the following resources:
+## Admin Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Access the admin dashboard at [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Default Admin Credentials:**
+- Email: `admin@veesioo.com`
+- Password: `admin123`
 
-## Deploy on Vercel
+### Dashboard Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Overview** - View statistics at a glance
+- **Testimonials** - Add, view, and delete client testimonials
+- **Messages** - View and manage contact form submissions
+- **Services** - Manage service offerings
+- **Team** - Manage team members
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+veesi00/
+├── prisma/
+│   ├── schema.prisma      # Database schema
+│   ├── seed.ts            # Database seeding script
+│   └── dev.db             # SQLite database
+├── src/
+│   ├── app/
+│   │   ├── admin/         # Admin dashboard pages
+│   │   ├── api/           # API routes
+│   │   ├── about/         # About page
+│   │   ├── contact/       # Contact page
+│   │   ├── reviews/       # Reviews page
+│   │   ├── services/      # Services page
+│   │   ├── team/          # Team page
+│   │   ├── layout.tsx     # Root layout
+│   │   └── page.tsx       # Homepage
+│   └── lib/
+│       └── prisma.ts      # Prisma client instance
+├── public/
+│   └── logo.png           # Company logo
+└── package.json
+```
+
+## Pages
+
+1. **Homepage** (`/`)
+   - Hero section with CTAs
+   - Why Choose Veesioo features
+   - Services preview
+   - Pricing packages
+   - Testimonials carousel
+   - Call-to-action section
+
+2. **About Us** (`/about`)
+   - Company overview
+   - Mission and vision
+   - Core values
+
+3. **Team** (`/team`)
+   - Team members grid
+   - Roles and bios
+
+4. **Services** (`/services`)
+   - Detailed service descriptions
+   - Features for each service
+
+5. **Reviews** (`/reviews`)
+   - Client testimonials
+   - Statistics showcase
+
+6. **Contact** (`/contact`)
+   - Contact form
+   - Company information
+   - Location details
+
+## API Routes
+
+- `POST /api/contact` - Submit contact form
+- `GET /api/testimonials` - Get all testimonials
+- `POST /api/testimonials` - Add testimonial (admin)
+- `DELETE /api/testimonials` - Delete testimonial (admin)
+- `GET /api/services` - Get all services
+- `POST /api/services` - Add service (admin)
+- `DELETE /api/services` - Delete service (admin)
+- `GET /api/team` - Get all team members
+- `POST /api/team` - Add team member (admin)
+- `DELETE /api/team` - Delete team member (admin)
+
+## Deployment
+
+### Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+### Environment Variables
+
+Create a `.env.local` file for production:
+
+```env
+NEXTAUTH_SECRET=your-secret-key-here
+NEXTAUTH_URL=http://localhost:3000
+```
+
+## License
+
+© 2026 Veesioo. All Rights Reserved.
