@@ -102,10 +102,10 @@ export default function Home() {
           }}
         ></div>
         <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-white">
             Build Your Website or Mobile App in Just 2 Days
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-white leading-relaxed">
             Full-Stack Websites from ₦50,000 (~$36)<br />
             Android & iPhone Apps from ₦100,000 (~$72)<br />
             <span className="font-semibold">Pay After Delivery.</span>
@@ -139,13 +139,13 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-2 rounded-full bg-white/20 text-white text-sm font-semibold mb-4 backdrop-blur-sm">
+            <span className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/20 text-white text-xs sm:text-sm font-semibold mb-4 backdrop-blur-sm">
               OUR ADVANTAGES
             </span>
-            <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4 md:mb-6 text-white">
               Why Choose Veesioo?
             </h2>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
               We deliver exceptional results with unmatched speed and flexibility
             </p>
           </div>
@@ -169,10 +169,10 @@ export default function Home() {
                 
                 {/* Content */}
                 <div className="relative">
-                  <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[var(--color-highlight)] transition-colors duration-300">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-[var(--color-highlight)] transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-white/70 text-base leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+                  <p className="text-sm sm:text-base text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                     {feature.desc}
                   </p>
                 </div>
@@ -206,16 +206,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white text-sm font-bold mb-6 shadow-lg">
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white text-xs sm:text-sm font-bold mb-4 sm:mb-6 shadow-lg">
+              <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               WHAT WE OFFER
             </div>
-            <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tight" style={{ color: 'var(--color-primary)' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black mb-4 md:mb-6 tracking-tight" style={{ color: 'var(--color-primary)' }}>
               Our Services
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Comprehensive digital solutions for your business
             </p>
           </div>
@@ -252,12 +252,12 @@ export default function Home() {
                       
                       {/* Icon */}
                       <div className="relative z-10">
-                        <div className="bg-white/20 backdrop-blur-sm rounded-2xl w-24 h-24 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                          <svg className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-2xl w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-500">
+                          <svg className="h-10 w-10 sm:h-12 sm:w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                           </svg>
                         </div>
-                        <h3 className="text-3xl font-bold text-white mb-3">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3">
                           {service.title}
                         </h3>
                       </div>
@@ -269,16 +269,16 @@ export default function Home() {
                 <div className="flex-1 w-full">
                   <div className="relative">
                     {/* Number badge */}
-                    <div className="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-[var(--color-highlight)] to-[var(--color-accent)] rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
-                      <span className="text-3xl font-black text-white">{String(index + 1).padStart(2, '0')}</span>
+                    <div className="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-[var(--color-highlight)] to-[var(--color-accent)] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
+                      <span className="text-xl sm:text-3xl font-black text-white">{String(index + 1).padStart(2, '0')}</span>
                     </div>
-                    
+
                     {/* Content */}
-                    <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 group-hover:border-[var(--color-highlight)]/30 group-hover:shadow-2xl transition-all duration-500">
-                      <h3 className="text-2xl font-bold mb-4 md:hidden" style={{ color: 'var(--color-primary)' }}>
+                    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl border border-gray-100 group-hover:border-[var(--color-highlight)]/30 group-hover:shadow-2xl transition-all duration-500">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 md:hidden" style={{ color: 'var(--color-primary)' }}>
                         {service.title}
                       </h3>
-                      <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                      <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8">
                         {service.description}
                       </p>
                       
@@ -338,13 +338,13 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-2 rounded-full bg-white/20 text-white text-xs font-bold mb-3 backdrop-blur-sm border border-white/30">
+            <span className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/20 text-white text-xs font-bold mb-3 backdrop-blur-sm border border-white/30">
               BEST VALUE
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-white">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-3 text-white">
               Pricing Snapshot
             </h2>
-            <p className="text-base text-white/80 max-w-xl mx-auto">
+            <p className="text-sm sm:text-base text-white/80 max-w-xl mx-auto">
               Transparent pricing with no hidden fees
             </p>
           </div>
@@ -360,18 +360,18 @@ export default function Home() {
                 </div>
                 
                 {/* Card content */}
-                <div className="mb-5">
-                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
+                <div className="mb-4 sm:mb-5">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
                     Starter Website
                   </h3>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold" style={{ color: 'var(--color-highlight)' }}>₦50,000</span>
-                    <span className="text-gray-500 text-sm">(~$36)</span>
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--color-highlight)' }}>₦50,000</span>
+                    <span className="text-gray-500 text-xs sm:text-sm">(~$36)</span>
                   </div>
                 </div>
-                
+
                 {/* Features */}
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-2 sm:space-y-3 mb-6">
                   {[
                     { text: '5 Pages' },
                     { text: 'Mobile Responsive' },
@@ -380,12 +380,12 @@ export default function Home() {
                     { text: 'Free Graphics' }
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-gray-700 text-sm">{feature.text}</span>
+                      <span className="text-gray-700 text-xs sm:text-sm">{feature.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -412,18 +412,18 @@ export default function Home() {
                 </div>
                 
                 {/* Card content */}
-                <div className="mb-5">
-                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
+                <div className="mb-4 sm:mb-5">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
                     Mobile App Package
                   </h3>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold" style={{ color: 'var(--color-accent)' }}>₦100,000</span>
-                    <span className="text-gray-500 text-sm">(~$72)</span>
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--color-accent)' }}>₦100,000</span>
+                    <span className="text-gray-500 text-xs sm:text-sm">(~$72)</span>
                   </div>
                 </div>
-                
+
                 {/* Features */}
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-2 sm:space-y-3 mb-6">
                   {[
                     { text: 'Android + iOS' },
                     { text: 'Admin Panel' },
@@ -431,12 +431,12 @@ export default function Home() {
                     { text: 'App Store Guidance' }
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--color-highlight)] to-[var(--color-accent)] flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-[var(--color-highlight)] to-[var(--color-accent)] flex items-center justify-center flex-shrink-0">
+                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-gray-700 text-sm">{feature.text}</span>
+                      <span className="text-gray-700 text-xs sm:text-sm">{feature.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -474,17 +474,17 @@ export default function Home() {
             <span className="inline-block px-4 py-2 rounded-full bg-[var(--color-highlight)]/10 text-[var(--color-highlight)] text-xs font-bold mb-3 border border-[var(--color-highlight)]/20">
               TESTIMONIALS
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
               What Our Clients Say
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6">
               Don't just take our word for it
             </p>
             <button
               onClick={() => setShowReviewModal(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              <Star className="w-5 h-5" />
+              <Star className="w-4 h-4 sm:w-5 sm:h-5" />
               Write a Review
             </button>
           </div>
@@ -577,18 +577,18 @@ export default function Home() {
         </div>
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-white">
             Ready to Build Your Project?
           </h2>
-          <p className="text-xl text-white/80 mb-8">
+          <p className="text-base sm:text-xl text-white/80 mb-6 sm:mb-8">
             Let's create something amazing together in just 2 days.
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-[var(--color-primary)] rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
+            className="group inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-white text-[var(--color-primary)] rounded-full font-bold text-base sm:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
           >
             Request Free Consultation
-            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
@@ -610,17 +610,17 @@ export default function Home() {
               <X className="w-5 h-5 text-gray-600" />
             </button>
 
-            <div className="p-8">
+            <div className="p-6 sm:p-8">
               {reviewSubmitted ? (
                 /* Success State */
                 <div className="text-center py-8">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-10 h-10 text-white" />
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3" style={{ color: 'var(--color-primary)' }}>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3" style={{ color: 'var(--color-primary)' }}>
                     Thank You!
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-sm sm:text-base text-gray-600 mb-6">
                     Your review has been submitted successfully.
                   </p>
                   <button
@@ -628,7 +628,7 @@ export default function Home() {
                       setShowReviewModal(false);
                       setReviewSubmitted(false);
                     }}
-                    className="px-6 py-3 bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[var(--color-highlight)] to-[var(--color-accent)] text-white rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     Close
                   </button>
@@ -637,15 +637,15 @@ export default function Home() {
                 /* Form */
                 <>
                   <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>
                       Write a Review
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-sm sm:text-base text-gray-600">
                       Share your experience with Veesioo
                     </p>
                   </div>
 
-                  <form onSubmit={handleReviewSubmit} className="space-y-5">
+                  <form onSubmit={handleReviewSubmit} className="space-y-4 sm:space-y-5">
                     {/* Rating */}
                     <div>
                       <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--color-primary)' }}>
@@ -660,7 +660,7 @@ export default function Home() {
                             className="transition-transform hover:scale-110"
                           >
                             <Star
-                              className={`w-8 h-8 ${
+                              className={`w-7 h-7 sm:w-8 sm:h-8 ${
                                 star <= reviewForm.rating
                                   ? 'text-yellow-400 fill-current'
                                   : 'text-gray-300'
@@ -681,7 +681,7 @@ export default function Home() {
                         required
                         value={reviewForm.name}
                         onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent outline-none transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent outline-none transition text-sm sm:text-base"
                         placeholder="John Doe"
                       />
                     </div>
@@ -695,7 +695,7 @@ export default function Home() {
                         type="text"
                         value={reviewForm.location}
                         onChange={(e) => setReviewForm({ ...reviewForm, location: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent outline-none transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--color-highlight)] focus:border-transparent outline-none transition text-sm sm:text-base"
                         placeholder="Lagos, Nigeria"
                       />
                     </div>

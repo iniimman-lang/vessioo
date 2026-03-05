@@ -1,5 +1,11 @@
 @import "tailwindcss";
+@import "../../tailwind.config.css";
 @import "./variables.css";
+
+/* Global font-size control - applies to entire website */
+html {
+  font-size: var(--base-font-size);
+}
 
 /* Use CSS variables throughout the website */
 body {
@@ -7,6 +13,70 @@ body {
   --secondary: var(--color-secondary);
   --accent: var(--color-accent);
   --highlight: var(--color-highlight);
+  /* Base font size using rem for scalability */
+  font-size: 1rem; /* 16px at 100%, scales with --base-font-size */
+  line-height: 1.6;
+}
+
+/* Global typography scale using rem and em */
+h1 {
+  font-size: clamp(1.75rem, 4vw, 3rem); /* Scales between 28px-48px */
+  line-height: 1.2;
+  margin-bottom: 0.75em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem); /* Scales between 24px-40px */
+  line-height: 1.25;
+  margin-bottom: 0.75em;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem); /* Scales between 20px-30px */
+  line-height: 1.3;
+  margin-bottom: 0.75em;
+}
+
+h4 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem); /* Scales between 18px-24px */
+  line-height: 1.35;
+  margin-bottom: 0.75em;
+}
+
+h5, h6 {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.4;
+  margin-bottom: 0.75em;
+}
+
+p {
+  font-size: 1rem; /* 16px */
+  line-height: 1.625;
+  margin-bottom: 1em;
+}
+
+small, .text-sm {
+  font-size: 0.875rem; /* 14px */
+}
+
+.text-xs {
+  font-size: 0.75rem; /* 12px */
+}
+
+.text-lg {
+  font-size: 1.125rem; /* 18px */
+}
+
+.text-xl {
+  font-size: 1.25rem; /* 20px */
+}
+
+.text-2xl {
+  font-size: 1.5rem; /* 24px */
+}
+
+.text-3xl {
+  font-size: 1.875rem; /* 30px */
 }
 
 /* Custom Animations */

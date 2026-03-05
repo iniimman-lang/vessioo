@@ -10,4 +10,21 @@
 
   /* Hero Background Image - Change this URL to update hero images */
   --hero-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+
+  /* Global Font Size Control - Adjust this ONE value to scale all text */
+  /* Default: 100% (16px base). Mobile: 87.5% (14px base). Increase/decrease as needed */
+  --base-font-size: 100%;
+}
+
+/* Mobile-first responsive font sizing */
+@media (max-width: 768px) {
+  :root {
+    --base-font-size: 87.5%; /* Reduces all text proportionally on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --base-font-size: 81.25%; /* Even smaller on very small screens */
+  }
 }

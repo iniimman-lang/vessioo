@@ -250,7 +250,7 @@ export default function DashboardPage() {
       <div className="lg:hidden bg-white shadow-sm p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Admin Dashboard</h1>
         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-700">
-          {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {sidebarOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
         </button>
       </div>
 
@@ -261,9 +261,9 @@ export default function DashboardPage() {
             sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           }`}
         >
-          <div className="p-6">
-            <img src="/logo.png" alt="Veesioo" className="h-[6rem] w-auto max-w-[100%] mb-6" />
-            <p className="text-sm text-gray-600 mb-6">Welcome, {session.user?.name || session.user?.email}</p>
+          <div className="p-4 sm:p-6">
+            <img src="/logo.png" alt="Veesioo" className="h-[4rem] sm:h-[6rem] w-auto max-w-[100%] mb-4 sm:mb-6" />
+            <p className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6">Welcome, {session.user?.name || session.user?.email}</p>
             <nav className="space-y-2">
               {navItems.map((item) => (
                 <button
@@ -272,13 +272,13 @@ export default function DashboardPage() {
                     setActiveTab(item.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center px-4 py-3 rounded-lg transition ${
+                  className={`w-full flex items-center px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition text-sm sm:text-base ${
                     activeTab === item.id
                       ? "bg-[var(--color-highlight)] text-white"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  <item.icon className="h-5 w-5 mr-3" />
+                  <item.icon className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
                   {item.label}
                 </button>
               ))}
@@ -303,56 +303,56 @@ export default function DashboardPage() {
         )}
 
         {/* Main content */}
-        <main className="flex-1 p-6 lg:p-8">
-          <h1 className="text-3xl font-bold mb-6 capitalize">{activeTab}</h1>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <h1 className="text-xl sm:text-3xl font-bold mb-4 sm:mb-6 capitalize">{activeTab}</h1>
 
           {/* Overview */}
           {activeTab === "overview" && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <Star className="h-8 w-8 text-yellow-500 mb-4" />
-                  <p className="text-3xl font-bold">{testimonials.length}</p>
-                  <p className="text-gray-600">Testimonials</p>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <Star className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{testimonials.length}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Testimonials</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <MessageSquare className="h-8 w-8 text-blue-500 mb-4" />
-                  <p className="text-3xl font-bold">{messages.length}</p>
-                  <p className="text-gray-600">Contact Msgs</p>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <MessageSquare className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{messages.length}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Contact Msgs</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <Users className="h-8 w-8 text-green-500 mb-4" />
-                  <p className="text-3xl font-bold">{services.length}</p>
-                  <p className="text-gray-600">Services</p>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-green-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{services.length}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Services</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <Briefcase className="h-8 w-8 text-purple-500 mb-4" />
-                  <p className="text-3xl font-bold">{teamMembers.length}</p>
-                  <p className="text-gray-600">Team</p>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <Briefcase className="h-6 w-6 sm:h-8 sm:w-8 text-purple-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{teamMembers.length}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Team</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <Globe className="h-8 w-8 text-red-500 mb-4" />
-                  <p className="text-3xl font-bold">{projects.length}</p>
-                  <p className="text-gray-600">Projects</p>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <Globe className="h-6 w-6 sm:h-8 sm:w-8 text-red-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{projects.length}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Projects</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <MessageCircle className="h-8 w-8 text-orange-500 mb-4" />
-                  <p className="text-3xl font-bold">{pendingCount}</p>
-                  <p className="text-gray-600">Pending Chat</p>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+                  <MessageCircle className="h-6 w-6 sm:h-8 sm:w-8 text-orange-500 mb-3 sm:mb-4" />
+                  <p className="text-2xl sm:text-3xl font-bold">{pendingCount}</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Pending Chat</p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold mb-4">Recent Messages</h2>
+              <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+                <h2 className="text-base sm:text-xl font-bold mb-3 sm:mb-4">Recent Messages</h2>
                 {messages.length === 0 ? (
-                  <p className="text-gray-600">No messages yet.</p>
+                  <p className="text-sm text-gray-600">No messages yet.</p>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {messages.slice(0, 5).map((msg) => (
-                      <div key={msg.id} className="border-b pb-4 last:border-0">
-                        <p className="font-semibold">{msg.name}</p>
-                        <p className="text-gray-600 text-sm">{msg.email}</p>
-                        <p className="text-gray-700 mt-2">{msg.message}</p>
+                      <div key={msg.id} className="border-b pb-3 sm:pb-4 last:border-0">
+                        <p className="font-semibold text-sm sm:text-base">{msg.name}</p>
+                        <p className="text-gray-600 text-xs sm:text-sm">{msg.email}</p>
+                        <p className="text-gray-700 mt-2 text-sm">{msg.message}</p>
                       </div>
                     ))}
                   </div>

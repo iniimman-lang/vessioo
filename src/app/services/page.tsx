@@ -54,19 +54,19 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-20">
+      <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
+          <p className="text-base sm:text-xl text-white/90 max-w-3xl mx-auto">
             Comprehensive digital solutions to grow your business
           </p>
         </div>
       </section>
 
       {/* Services List */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
+          <div className="space-y-12 sm:space-y-16">
             {services.map((service, index) => {
               const IconComponent = service.icon ? iconMap[service.icon] || Globe : Globe;
               const details = serviceDetails[service.title] || {
@@ -77,32 +77,32 @@ export default function ServicesPage() {
               return (
                 <div
                   key={service.id}
-                  className={`flex flex-col md:flex-row gap-8 items-center ${
+                  className={`flex flex-col md:flex-row gap-6 md:gap-8 items-center ${
                     index % 2 === 1 ? "md:flex-row-reverse" : ""
                   }`}
                 >
-                  <div className="flex-1">
-                    <div className="bg-[var(--color-highlight)]/10 rounded-2xl p-8 flex items-center justify-center h-64">
-                      <IconComponent className="h-32 w-32" style={{ color: 'var(--color-highlight)' }} />
+                  <div className="flex-1 w-full">
+                    <div className="bg-[var(--color-highlight)]/10 rounded-2xl p-6 sm:p-8 flex items-center justify-center">
+                      <IconComponent className="h-24 w-24 sm:h-32 sm:w-32" style={{ color: 'var(--color-highlight)' }} />
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h2 className="text-3xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>{service.title}</h2>
-                    <p className="text-lg text-gray-700 mb-6">{details.description}</p>
-                    <p className="text-gray-600 mb-4 font-semibold">Includes:</p>
-                    <ul className="space-y-2 mb-8">
+                  <div className="flex-1 w-full">
+                    <h2 className="text-xl sm:text-3xl font-bold mb-3 sm:mb-4" style={{ color: 'var(--color-primary)' }}>{service.title}</h2>
+                    <p className="text-sm sm:text-lg text-gray-700 mb-4 sm:mb-6">{details.description}</p>
+                    <p className="text-sm text-gray-600 mb-3 sm:mb-4 font-semibold">Includes:</p>
+                    <ul className="space-y-2 mb-6 sm:mb-8">
                       {details.features.map((feature, i) => (
-                        <li key={i} className="flex items-center text-gray-700">
-                          <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                        <li key={i} className="flex items-center text-sm sm:text-base text-gray-700">
+                          <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3 flex-shrink-0" />
                           {feature}
                         </li>
                       ))}
                     </ul>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center" style={{ color: 'var(--color-highlight)' }}
+                      className="inline-flex items-center text-sm sm:text-base" style={{ color: 'var(--color-highlight)' }}
                     >
-                      Get Started <ArrowRight className="ml-2 h-5 w-5" />
+                      Get Started <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
                   </div>
                 </div>
@@ -113,15 +113,15 @@ export default function ServicesPage() {
       </section>
 
       {/* Pricing CTA */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 sm:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>Ready to Get Started?</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6" style={{ color: 'var(--color-primary)' }}>Ready to Get Started?</h2>
+          <p className="text-sm sm:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Contact us today for a free consultation and quote for your project.
           </p>
           <Link
             href="/contact"
-            className="inline-block bg-[var(--color-highlight)] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[var(--color-accent)] transition"
+            className="inline-block bg-[var(--color-highlight)] text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-semibold text-sm sm:text-base hover:bg-[var(--color-accent)] transition"
           >
             Request Free Consultation
           </Link>
