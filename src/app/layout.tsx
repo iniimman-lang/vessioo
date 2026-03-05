@@ -39,7 +39,7 @@ export default function RootLayout({
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link href="/" className="flex items-center">
-                <img src="/logo.png" alt="Veesioo" className="h-12 sm:h-16 w-auto max-w-[100%]" />
+                <img src="/logo.png" alt="Veesioo" className="h-16 sm:h-20 w-auto max-w-[100%]" />
               </Link>
               <div className="hidden md:flex space-x-8">
                 <Link href="/" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Home</Link>
@@ -66,23 +66,61 @@ export default function RootLayout({
             {/* Mobile Menu */}
             <div id="mobile-menu" className="hidden md:hidden pb-4">
               <div className="flex flex-col space-y-2">
-                <Link href="/" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Home</Link>
-                <Link href="/about" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>About Us</Link>
-                <Link href="/projects" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Projects</Link>
-                <Link href="/team" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Team</Link>
-                <Link href="/services" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Services</Link>
-                <Link href="/reviews" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
-                <Link href="/contact" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Contact</Link>
+                <Link href="/" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Home</Link>
+                <Link href="/about" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>About Us</Link>
+                <Link href="/projects" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Projects</Link>
+                <Link href="/team" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Team</Link>
+                <Link href="/services" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Services</Link>
+                <Link href="/reviews" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
+                <Link href="/contact" className="mobile-menu-link px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Contact</Link>
               </div>
             </div>
           </nav>
         </header>
         <script dangerouslySetInnerHTML={{
           __html: `
-            document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            (function() {
+              var menuBtn = document.getElementById('mobile-menu-btn');
               var menu = document.getElementById('mobile-menu');
-              menu.classList.toggle('hidden');
-            });
+              var menuLinks = document.querySelectorAll('.mobile-menu-link');
+              var menuOpen = false;
+
+              function toggleMenu() {
+                menuOpen = !menuOpen;
+                menu.classList.toggle('hidden');
+              }
+
+              function closeMenu() {
+                menuOpen = false;
+                menu.classList.add('hidden');
+              }
+
+              if (menuBtn) {
+                menuBtn.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  toggleMenu();
+                });
+              }
+
+              // Close menu when clicking on a link
+              menuLinks.forEach(function(link) {
+                link.addEventListener('click', closeMenu);
+              });
+
+              // Close menu when clicking outside
+              document.addEventListener('click', function(e) {
+                if (menuOpen && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+                  closeMenu();
+                }
+              });
+
+              // Prevent menu from closing when clicking inside
+              if (menu) {
+                menu.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                });
+              }
+            })();
           `
         }} />
         <main>{children}</main>
