@@ -39,27 +39,52 @@ export default function RootLayout({
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link href="/" className="flex items-center">
-                <img src="/logo.png" alt="Veesioo" className="h-[10rem] w-auto max-w-[100%]" />
+                <img src="/logo.png" alt="Veesioo" className="h-12 sm:h-16 w-auto max-w-[100%]" />
               </Link>
               <div className="hidden md:flex space-x-8">
-                <Link href="/" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Home</Link>
-                <Link href="/about" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>About Us</Link>
-                <Link href="/projects" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Projects</Link>
-                <Link href="/team" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Team</Link>
-                <Link href="/services" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Services</Link>
-                <Link href="/reviews" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
-                <Link href="/contact" className="hover:text-[var(--color-highlight)] transition" style={{ color: 'var(--color-primary)' }}>Contact</Link>
+                <Link href="/" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Home</Link>
+                <Link href="/about" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>About Us</Link>
+                <Link href="/projects" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Projects</Link>
+                <Link href="/team" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Team</Link>
+                <Link href="/services" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Services</Link>
+                <Link href="/reviews" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
+                <Link href="/contact" className="hover:text-[var(--color-highlight)] transition font-medium" style={{ color: 'var(--color-primary)' }}>Contact</Link>
               </div>
               <div className="md:hidden">
-                <button className="mobile-menu-btn" style={{ color: 'var(--color-primary)' }}>
+                <button 
+                  id="mobile-menu-btn"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition"
+                  aria-label="Toggle menu"
+                  style={{ color: 'var(--color-primary)' }}
+                >
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
                 </button>
               </div>
             </div>
+            {/* Mobile Menu */}
+            <div id="mobile-menu" className="hidden md:hidden pb-4">
+              <div className="flex flex-col space-y-2">
+                <Link href="/" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Home</Link>
+                <Link href="/about" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>About Us</Link>
+                <Link href="/projects" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Projects</Link>
+                <Link href="/team" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Team</Link>
+                <Link href="/services" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Services</Link>
+                <Link href="/reviews" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Reviews</Link>
+                <Link href="/contact" className="px-4 py-2 hover:bg-gray-100 rounded-lg transition font-medium" style={{ color: 'var(--color-primary)' }}>Contact</Link>
+              </div>
+            </div>
           </nav>
         </header>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+              var menu = document.getElementById('mobile-menu');
+              menu.classList.toggle('hidden');
+            });
+          `
+        }} />
         <main>{children}</main>
         <footer style={{ backgroundColor: 'var(--color-primary)' }} className="text-white mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

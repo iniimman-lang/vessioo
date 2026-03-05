@@ -20,14 +20,14 @@ body {
 
 /* Global typography scale using rem and em */
 h1 {
-  font-size: clamp(1.75rem, 4vw, 3rem); /* Scales between 28px-48px */
-  line-height: 1.2;
+  font-size: clamp(2rem, 5vw, 4rem); /* Scales between 32px-64px */
+  line-height: 1.1;
   margin-bottom: 0.75em;
 }
 
 h2 {
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem); /* Scales between 24px-40px */
-  line-height: 1.25;
+  font-size: clamp(1.75rem, 4vw, 3rem); /* Scales between 28px-48px */
+  line-height: 1.2;
   margin-bottom: 0.75em;
 }
 
@@ -105,4 +105,150 @@ small, .text-sm {
 
 .animation-delay-4000 {
   animation-delay: 4s;
+}
+
+/* Advanced Hero Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 179, 237, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 179, 237, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 1000px 100%;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.8s ease-out forwards;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Stagger animations for children */
+.animate-fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+.animate-fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+.animate-fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+.animate-fade-in-up:nth-child(4) { animation-delay: 0.4s; }
+.animate-fade-in-up:nth-child(5) { animation-delay: 0.5s; }
+
+/* Gradient background utility */
+.bg-animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    #1e3a5f,
+    #2c5282,
+    #4299e1,
+    #63b3ed,
+    #1e3a5f
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
 }
