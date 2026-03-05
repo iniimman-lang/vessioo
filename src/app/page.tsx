@@ -3,11 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Star, Zap, CreditCard, Palette, Smartphone, Globe, Lock } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from 'lenis';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface Testimonial {
   id: string;
@@ -37,139 +32,158 @@ export default function Home() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
-  const heroRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Initialize Lenis Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
+    // Check if mobile
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
     // Fetch data
     fetch("/api/testimonials")
       .then((res) => res.json())
-      .then((data) => setTestimonials(data));
+      .then((data) => setTestimonials(data))
+      .catch(console.error);
 
     fetch("/api/services")
       .then((res) => res.json())
-      .then((data) => setServices(data));
+      .then((data) => setServices(data))
+      .catch(console.error);
 
     fetch("/api/projects")
       .then((res) => res.json())
-      .then((data) => setProjects(data));
+      .then((data) => setProjects(data))
+      .catch(console.error);
 
-    // GSAP Animations
-    const ctx = gsap.context(() => {
-      // Hero Title Reveal
-      const titleLines = document.querySelectorAll('.hero-title-line');
-      gsap.from(titleLines, {
-        y: '100%',
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: 'power4.out',
-        delay: 0.2,
-      });
+    // Dynamic import GSAP only on client
+    const initAnimations = async () => {
+      try {
+        const gsap = (await import('gsap')).default;
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+        const Lenis = (await import('lenis')).default;
 
-      // Hero Subtitle
-      gsap.from('.hero-subtitle', {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.8,
-      });
+        gsap.registerPlugin(ScrollTrigger);
 
-      // Hero Buttons
-      gsap.from('.hero-btn', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        delay: 1,
-      });
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+          duration: 1.2,
+        });
 
-      // Stats Counter Animation
-      const stats = document.querySelectorAll('.stat-number');
-      stats.forEach((stat) => {
-        const target = stat.getAttribute('data-target');
-        gsap.to(stat, {
-          textContent: target,
-          duration: 2,
-          snap: { textContent: 1 },
+        function raf(time: number) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        // Hero Title Reveal
+        const titleLines = document.querySelectorAll('.hero-title-line');
+        gsap.from(titleLines, {
+          y: '100%',
+          opacity: 0,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'power4.out',
+          delay: 0.2,
+        });
+
+        // Hero Subtitle
+        gsap.from('.hero-subtitle', {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          delay: 0.8,
+        });
+
+        // Hero Buttons
+        gsap.from('.hero-btn', {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out',
+          delay: 1,
+        });
+
+        // Stats Counter Animation
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach((stat) => {
+          const target = stat.getAttribute('data-target');
+          gsap.to(stat, {
+            textContent: target,
+            duration: 2,
+            snap: { textContent: 1 },
+            scrollTrigger: {
+              trigger: stat,
+              start: 'top 80%',
+            },
+          });
+        });
+
+        // Services Cards Reveal
+        gsap.from('.service-card', {
+          y: 100,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.15,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: stat,
-            start: 'top 80%',
+            trigger: '.services-section',
+            start: 'top 70%',
           },
         });
-      });
 
-      // Services Cards Reveal
-      gsap.from('.service-card', {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.services-section',
-          start: 'top 70%',
-        },
-      });
+        // Projects Parallax
+        gsap.utils.toArray('.project-card').forEach((card: any, i) => {
+          gsap.from(card, {
+            y: 80,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+            },
+            delay: i * 0.1,
+          });
+        });
 
-      // Projects Parallax
-      gsap.utils.toArray('.project-card').forEach((card: any, i) => {
-        gsap.from(card, {
+        // Testimonials Reveal
+        gsap.from('.testimonial-card', {
           y: 80,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.testimonials-section',
+            start: 'top 70%',
+          },
+        });
+
+        // CTA Section Scale
+        gsap.from('.cta-section', {
+          scale: 0.9,
           opacity: 0,
           duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
+            trigger: '.cta-section',
+            start: 'top 75%',
           },
-          delay: i * 0.1,
         });
-      });
+      } catch (error) {
+        console.error('Animation init error:', error);
+      }
+    };
 
-      // Testimonials Reveal
-      gsap.from('.testimonial-card', {
-        y: 80,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.testimonials-section',
-          start: 'top 70%',
-        },
-      });
-
-      // CTA Section Scale
-      gsap.from('.cta-section', {
-        scale: 0.9,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.cta-section',
-          start: 'top 75%',
-        },
-      });
-    });
+    initAnimations();
 
     return () => {
-      ctx.revert();
-      lenis.destroy();
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
@@ -185,16 +199,20 @@ export default function Home() {
   return (
     <div className="bg-[#0a0a0a] text-white">
       {/* Navigation */}
-      <nav className="nav">
-        <Link href="/" className="nav-logo">VEESIOO</Link>
-        <ul className="nav-menu">
-          <li><Link href="/about" className="nav-link">About</Link></li>
-          <li><Link href="/services" className="nav-link">Services</Link></li>
-          <li><Link href="/projects" className="nav-link">Projects</Link></li>
-          <li><Link href="/team" className="nav-link">Team</Link></li>
-          <li><Link href="/contact" className="nav-link">Contact</Link></li>
+      <nav className="fixed top-0 left-0 right-0 z-50 px-[clamp(20px,5vw,8%)] py-[clamp(20px,4vw,40px)] flex justify-between items-center mix-blend-difference">
+        <Link href="/" className="text-2xl font-bold tracking-tight">VEESIOO</Link>
+        <ul className="hidden md:flex gap-[clamp(20px,4vw,40px)] list-none">
+          <li><Link href="/about" className="text-sm font-medium uppercase tracking-wider hover:underline">About</Link></li>
+          <li><Link href="/services" className="text-sm font-medium uppercase tracking-wider hover:underline">Services</Link></li>
+          <li><Link href="/projects" className="text-sm font-medium uppercase tracking-wider hover:underline">Projects</Link></li>
+          <li><Link href="/team" className="text-sm font-medium uppercase tracking-wider hover:underline">Team</Link></li>
+          <li><Link href="/contact" className="text-sm font-medium uppercase tracking-wider hover:underline">Contact</Link></li>
         </ul>
-        <button className="mobile-menu-btn" aria-label="Menu">
+        <button 
+          className="md:hidden p-2 bg-transparent border-none cursor-pointer"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Menu"
+        >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
@@ -203,32 +221,53 @@ export default function Home() {
         </button>
       </nav>
 
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-[#0a0a0a] flex flex-col justify-center items-center gap-8">
+          <button 
+            className="absolute top-8 right-8 p-2 bg-transparent border-none cursor-pointer"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <Link href="/about" className="text-[clamp(2rem,8vw,4rem)] font-bold uppercase" onClick={() => setMobileMenuOpen(false)}>About</Link>
+          <Link href="/services" className="text-[clamp(2rem,8vw,4rem)] font-bold uppercase" onClick={() => setMobileMenuOpen(false)}>Services</Link>
+          <Link href="/projects" className="text-[clamp(2rem,8vw,4rem)] font-bold uppercase" onClick={() => setMobileMenuOpen(false)}>Projects</Link>
+          <Link href="/team" className="text-[clamp(2rem,8vw,4rem)] font-bold uppercase" onClick={() => setMobileMenuOpen(false)}>Team</Link>
+          <Link href="/contact" className="text-[clamp(2rem,8vw,4rem)] font-bold uppercase" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section ref={heroRef} className="hero">
-        <div className="container">
-          <h1 ref={titleRef} className="hero-title">
-            <span className="hero-title-line">Build Your</span>
-            <span className="hero-title-line">Digital Future</span>
-            <span className="hero-title-line" style={{ color: 'var(--color-highlight)' }}>Today</span>
+      <section className="hero min-h-screen flex flex-col justify-center items-center text-center pt-24">
+        <div className="container max-w-7xl mx-auto px-[clamp(20px,5vw,8%)]">
+          <h1 className="text-[clamp(3rem,10vw,9rem)] font-black leading-[0.95] tracking-[-0.04em] uppercase mb-[clamp(20px,4vw,40px)]">
+            <span className="hero-title-line block overflow-hidden">Build Your</span>
+            <span className="hero-title-line block overflow-hidden">Digital Future</span>
+            <span className="hero-title-line block overflow-hidden" style={{ color: 'var(--color-highlight)' }}>Today</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-subtitle text-[clamp(1rem,2vw,1.5rem)] text-[#8a8a8a] max-w-[600px] mx-auto mb-[clamp(30px,6vw,60px)]">
             Premium websites and mobile apps delivered in 48 hours.
             Pay after delivery. Starting from ₦50,000.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center hero-btns">
-            <Link href="/contact" className="btn btn-primary hero-btn">
+            <Link href="/contact" className="btn btn-primary inline-flex items-center justify-center gap-2 px-[clamp(32px,6vw,64px)] py-[clamp(16px,3vw,24px)] text-sm font-bold uppercase tracking-wider bg-white text-[#0a0a0a] relative overflow-hidden transition-all duration-300 hover:text-white">
               Start Project
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/projects" className="btn btn-outline hero-btn">
+            <Link href="/projects" className="btn btn-outline inline-flex items-center justify-center gap-2 px-[clamp(32px,6vw,64px)] py-[clamp(16px,3vw,24px)] text-sm font-bold uppercase tracking-wider bg-transparent text-white border border-[rgba(255,255,255,0.3)] hover:border-white hover:bg-[rgba(255,255,255,0.1)] transition-all duration-300">
               View Portfolio
             </Link>
           </div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="scroll-indicator">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="scroll-indicator absolute bottom-[40px] left-1/2 -translate-x-1/2 animate-[bounce_2s_ease-in-out_infinite]">
+          <svg className="w-6 h-6 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
         </div>
