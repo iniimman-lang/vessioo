@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 interface Project {
   id: string;
@@ -18,9 +19,10 @@ export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => setProjects(data));
+    (async () => {
+      const data = await fetchJSON<any[]>("/api/projects");
+      setProjects(Array.isArray(data) ? data : []);
+    })();
   }, []);
 
   const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category).filter(Boolean))) as string[]];

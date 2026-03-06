@@ -16,6 +16,7 @@ import {
   Globe,
   MessageCircle,
 } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 interface Testimonial {
   id: string;
@@ -108,33 +109,48 @@ export default function DashboardPage() {
   }, [session]);
 
   const fetchTestimonials = async () => {
-    const res = await fetch("/api/testimonials");
-    const data = await res.json();
-    setTestimonials(data);
+    try {
+      const data = await fetchJSON<any[]>("/api/testimonials");
+      setTestimonials(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchMessages = async () => {
-    const res = await fetch("/api/contact");
-    const data = await res.json();
-    setMessages(data);
+    try {
+      const data = await fetchJSON<any[]>("/api/contact");
+      setMessages(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchServices = async () => {
-    const res = await fetch("/api/services");
-    const data = await res.json();
-    setServices(data);
+    try {
+      const data = await fetchJSON<any[]>("/api/services");
+      setServices(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchTeamMembers = async () => {
-    const res = await fetch("/api/team");
-    const data = await res.json();
-    setTeamMembers(data);
+    try {
+      const data = await fetchJSON<any[]>("/api/team");
+      setTeamMembers(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchProjects = async () => {
-    const res = await fetch("/api/projects");
-    const data = await res.json();
-    setProjects(data);
+    try {
+      const data = await fetchJSON<any[]>("/api/projects");
+      setProjects(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const fetchChatMessages = async () => {

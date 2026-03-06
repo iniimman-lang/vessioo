@@ -12,10 +12,8 @@ export async function GET() {
     return NextResponse.json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch projects", details: error instanceof Error ? error.message : error },
-      { status: 500 }
-    );
+    // return empty list so clients don't crash; status 200 keeps front‑end simple
+    return NextResponse.json([]);
   }
 }
 

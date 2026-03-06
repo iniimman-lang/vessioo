@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Star, ThumbsUp, MessageSquare, Repeat } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 interface Testimonial {
   id: string;
@@ -15,9 +16,10 @@ export default function ReviewsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
-    fetch("/api/testimonials")
-      .then((res) => res.json())
-      .then((data) => setTestimonials(data));
+    (async () => {
+      const data = await fetchJSON<any[]>("/api/testimonials");
+      setTestimonials(Array.isArray(data) ? data : []);
+    })();
   }, []);
 
   const stats = [

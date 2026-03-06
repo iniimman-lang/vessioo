@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Globe, Smartphone, Palette, ShoppingCart, Cpu, ArrowRight, CheckCircle } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 interface Service {
   id: string;
@@ -46,9 +47,10 @@ export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data));
+    (async () => {
+      const data = await fetchJSON<any[]>("/api/services");
+      setServices(Array.isArray(data) ? data : []);
+    })();
   }, []);
 
   return (

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Star, Zap, CreditCard, Palette, Smartphone, Globe, Lock } from "lucide-react";
+import { fetchJSON } from "@/lib/api";  // safe helper for API calls
 
 interface Testimonial {
   id: string;
@@ -42,20 +43,32 @@ export default function Home() {
     window.addEventListener('resize', checkMobile);
 
     // Fetch data
-    fetch("/api/testimonials")
-      .then((res) => res.json())
-      .then((data) => setTestimonials(data))
-      .catch(console.error);
+    (async () => {
+      try {
+        const data = await fetchJSON<any[]>("/api/testimonials");
+        setTestimonials(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
-    fetch("/api/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data))
-      .catch(console.error);
+    (async () => {
+      try {
+        const data = await fetchJSON<any[]>("/api/services");
+        setServices(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch(console.error);
+    (async () => {
+      try {
+        const data = await fetchJSON<any[]>("/api/projects");
+        setProjects(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
     // Dynamic import GSAP only on client
     const initAnimations = async () => {
@@ -80,33 +93,39 @@ export default function Home() {
 
         // Hero Title Reveal
         const titleLines = document.querySelectorAll('.hero-title-line');
-        gsap.from(titleLines, {
-          y: '100%',
-          opacity: 0,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power4.out',
-          delay: 0.2,
-        });
+        if (titleLines.length) {
+          gsap.from(titleLines, {
+            y: '100%',
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: 'power4.out',
+            delay: 0.2,
+          });
+        }
 
         // Hero Subtitle
-        gsap.from('.hero-subtitle', {
-          y: 40,
-          opacity: 0,
-          duration: 1,
-          ease: 'power3.out',
-          delay: 0.8,
-        });
+        if (document.querySelector('.hero-subtitle')) {
+          gsap.from('.hero-subtitle', {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+            delay: 0.8,
+          });
+        }
 
         // Hero Buttons
-        gsap.from('.hero-btn', {
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          delay: 1,
-        });
+        if (document.querySelectorAll('.hero-btn').length) {
+          gsap.from('.hero-btn', {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            delay: 1,
+          });
+        }
 
         // Stats Counter Animation
         const stats = document.querySelectorAll('.stat-number');
@@ -117,24 +136,25 @@ export default function Home() {
             duration: 2,
             snap: { textContent: 1 },
             scrollTrigger: {
-              trigger: stat,
               start: 'top 80%',
             },
           });
         });
 
         // Services Cards Reveal
-        gsap.from('.service-card', {
-          y: 100,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.services-section',
-            start: 'top 70%',
-          },
-        });
+        if (document.querySelector('.services-section')) {
+          gsap.from('.service-card', {
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.services-section',
+              start: 'top 70%',
+            },
+          });
+        }
 
         // Projects Parallax
         gsap.utils.toArray('.project-card').forEach((card: any, i) => {
@@ -152,29 +172,33 @@ export default function Home() {
         });
 
         // Testimonials Reveal
-        gsap.from('.testimonial-card', {
-          y: 80,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.testimonials-section',
-            start: 'top 70%',
-          },
-        });
+        if (document.querySelector('.testimonials-section')) {
+          gsap.from('.testimonial-card', {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.testimonials-section',
+              start: 'top 80%',
+            },
+          });
+        }
 
         // CTA Section Scale
-        gsap.from('.cta-section', {
-          scale: 0.9,
-          opacity: 0,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.cta-section',
-            start: 'top 75%',
-          },
-        });
+        if (document.querySelector('.cta-section')) {
+          gsap.from('.cta-section', {
+            scale: 0.9,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.cta-section',
+              start: 'top 75%',
+            },
+          });
+        }
       } catch (error) {
         console.error('Animation init error:', error);
       }
@@ -302,7 +326,7 @@ export default function Home() {
         <div className="container">
           <h2 className="mb-16">Our Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.slice(0, 6).map((service, index) => (
+            {(Array.isArray(services) ? services.slice(0, 6) : []).map((service, index) => (
               <div key={service.id} className="card service-card">
                 <h3 className="text-xl mb-3">{service.title}</h3>
                 <p className="text-gray-400">{service.description}</p>
@@ -329,7 +353,7 @@ export default function Home() {
         <div className="container">
           <h2 className="mb-16">Featured Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.slice(0, 6).map((project) => (
+            {(Array.isArray(projects) ? projects.slice(0, 6) : []).map((project) => (
               <div key={project.id} className="project-card">
                 <img
                   src={project.imageUrl || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"}
@@ -352,7 +376,7 @@ export default function Home() {
         <div className="container">
           <h2 className="mb-16">Client Reviews</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.slice(0, 3).map((testimonial) => (
+            {(Array.isArray(testimonials) ? testimonials.slice(0, 3) : []).map((testimonial) => (
               <div key={testimonial.id} className="card testimonial-card">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (

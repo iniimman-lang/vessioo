@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { User } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 interface TeamMember {
   id: string;
@@ -15,9 +16,10 @@ export default function TeamPage() {
   const [members, setMembers] = useState<TeamMember[]>([]);
 
   useEffect(() => {
-    fetch("/api/team")
-      .then((res) => res.json())
-      .then((data) => setMembers(data));
+    (async () => {
+      const data = await fetchJSON<any[]>("/api/team");
+      setMembers(Array.isArray(data) ? data : []);
+    })();
   }, []);
 
   return (

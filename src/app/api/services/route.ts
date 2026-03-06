@@ -12,10 +12,8 @@ export async function GET() {
     return NextResponse.json(services);
   } catch (error) {
     console.error("Error fetching services:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch services", details: error instanceof Error ? error.message : error },
-      { status: 500 }
-    );
+    // return empty list instead of an error object
+    return NextResponse.json([]);
   }
 }
 

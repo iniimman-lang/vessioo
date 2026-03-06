@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import {
   MessageCircle, Star, Users, Briefcase, Globe, LogOut, Menu, X, Send, Trash2
 } from "lucide-react";
+import { fetchJSON } from "@/lib/api";
 
 export default function MobileAdminPage() {
   const { data: session, status } = useSession();
@@ -31,9 +32,8 @@ export default function MobileAdminPage() {
 
   const fetchChatMessages = async () => {
     try {
-      const res = await fetch("/api/chat");
-      const data = await res.json();
-      setChatMessages(data);
+      const data = await fetchJSON<any[]>("/api/chat");
+      setChatMessages(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error:", error);
     }
